@@ -99,10 +99,6 @@ function drawScene1(data) {
         .attr("dy", "0.32em")
         .text(d => d);
 
-    let annotationText = `Netflix's content production started slowly, but it began to gain momentum in 2015.
-A spike in content production occurred between 2016 and 2017, with a rapid increase in movies and TV shows.
-\r
-However, content production slowed down in 2020, possibly due to the impact of the COVID-19 pandemic.`;
 
     g.append("text")
         .attr("x", 20)
