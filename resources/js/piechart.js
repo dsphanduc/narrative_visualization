@@ -6,12 +6,19 @@ const radius = Math.min(widthPie, heightPie) / 2;
 // Chọn phần tử SVG và thiết lập thuộc tính chiều rộng và chiều cao
 const svgPie = d3.select("#piechart").html("")
   .append("svg")
-  .attr("width", widthPie)
-  .attr("height", heightPie)
+  .attr("width", widthPie+500)
+  .attr("height", heightPie + 300)
   .append("g")
-  .attr("transform", "translate(" + widthPie / 2 + "," + heightPie / 2 + ")");
+  .attr("transform", "translate(" + 250 + "," + (350) + ")");
 
-
+  svgPie.append("text")
+  .attr("x", 0)
+  .attr("y", -300) // Điều chỉnh vị trí của tiêu đề
+  .attr("text-anchor", "middle")
+  .style("font-size", "25px")
+  
+  .style("font-weight", "bold")
+  .text("Total Movies & TV Shows on Netflix");
 
 
 // Dữ liệu Movies và TV shows
@@ -60,6 +67,7 @@ function draw_pie(data) {
     .attr("d", path)
     .attr("fill", function(d) { return color(d.data.category) });
 
+  
   // Hiển thị phần trăm cho mỗi cung
   arc.append("text")
     .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })

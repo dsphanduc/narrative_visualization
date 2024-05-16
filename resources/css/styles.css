@@ -111,3 +111,6 @@ kbd {
     padding: 2px;
     border: 1px solid black;
 }
+#piechart svg {
+    transform: translateY(20px);
+  }
