@@ -99,27 +99,31 @@ function drawScene1(data) {
         .attr("dy", "0.32em")
         .text(d => d);
 
-
-    g.append("text")
-        .attr("x", 20)
-        .attr("y", 15)
-        .attr("dy", "1.2em")
+        // let annotationText = `The United States 🇺🇸 stands as the highest content producer, with India 🇮🇳 coming in second place.
+        // \r
+        // What's particularly interesting is the substantial growth in content production that started around 2016, 
+        // showcasing Netflix's strategic shift to enhance its global content offerings.`;
+        g.append("text")
+        .attr("x", width / 2) // Đặt x ở giữa của biểu đồ
+        .attr("y", margin.top / 2) // Đặt y ở phía trên của biểu đồ
+        .attr("dy", "0.35em")
         .style("font-size", "30px")
         .style("font-weight", "bold")
+        .attr("text-anchor", "middle") // Căn giữa văn bản theo trục x
         .attr("font-family", "sans-serif")
         .text("Content Growth: Movies and TV Shows added over the years");
 
-    g.append("text")
-        .attr("x", 0)
-        .attr("y", 65)
-        .style("font-size", "20px")
-        .attr("font-family", "sans-serif")
-        .selectAll("tspan")
-        .data(annotationText.split('\n'))
-        .join("tspan")
-        .attr("x", 20)
-        .attr("dy", "1.2em")
-        .text(d => d);
+    // g.append("text")
+    //     .attr("x", 0)
+    //     .attr("y", 65)
+    //     .style("font-size", "20px")
+    //     .attr("font-family", "sans-serif")
+    //     .selectAll("tspan")
+    //     .data(annotationText.split('\n'))
+    //     .join("tspan")
+    //     .attr("x", 20)
+    //     .attr("dy", "1.2em")
+    //     .text(d => d);
 
     const tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
@@ -155,28 +159,28 @@ function drawScene1(data) {
                 .attr("r", 8);
         });
 
-    const annotations = [
-        {
-            note: {
-                title: "Fast Content Growth",
-                label: "Starting from 2016, Netflix started significantly increasing its content library, marking a period of rapid growth."
-            },
-            type: d3.annotationCalloutCircle,
-            subject: {radius: 30},
-            x: x(new Date(2016, 0, 1)),
-            y: y(newData.find(d => d.date.getFullYear() === 2016 && d.type === 'Movie').value),
-            dy: -39,
-            dx: -120,
-            color: ["black"],
-        },
-    ];
+    // const annotations = [
+    //     {
+    //         note: {
+    //             title: "Fast Content Growth",
+    //             label: "Starting from 2016, Netflix started significantly increasing its content library, marking a period of rapid growth."
+    //         },
+    //         type: d3.annotationCalloutCircle,
+    //         subject: {radius: 30},
+    //         x: x(new Date(2016, 0, 1)),
+    //         y: y(newData.find(d => d.date.getFullYear() === 2016 && d.type === 'Movie').value),
+    //         dy: -39,
+    //         dx: -120,
+    //         color: ["black"],
+    //     },
+    // ];
 
-    const makeAnnotations = d3.annotation()
-        .annotations(annotations);
-    g.append("g")
-        .style("font-size", "18px")
-        .style("font-family", "sans-serif")
-        .call(makeAnnotations);
+    // const makeAnnotations = d3.annotation()
+    //     .annotations(annotations);
+    // g.append("g")
+    //     .style("font-size", "18px")
+    //     .style("font-family", "sans-serif")
+    //     .call(makeAnnotations);
 
     const g2 = svg.append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
