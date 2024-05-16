@@ -1,6 +1,6 @@
 function drawScene1(data) {
     const svg = d3.select("#chart").html("");
-    const width = 1000, height = 500, margin = {top: 50, right: 0, bottom: 50, left: 125};
+    const width = 1500, height = 700, margin = {top: 50, right: 0, bottom: 50, left: 125};
 
     const parseTime = d3.timeParse("%Y-%m-%d");
     const x = d3.scaleTime().range([0, width - margin.left - margin.right]);

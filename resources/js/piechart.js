@@ -1,13 +1,18 @@
 // Kích thước SVG và bán kính của biểu đồ tròn
-const widthPie = 700;
-const heightPie = 700;
+const widthPie = 500;
+const heightPie = 500;
 const radius = Math.min(widthPie, heightPie) / 2;
 
 // Chọn phần tử SVG và thiết lập thuộc tính chiều rộng và chiều cao
-const svgPie = d3.select("#piechart")
+const svgPie = d3.select("#piechart").html("")
   .append("svg")
   .attr("width", widthPie)
-  .attr("height", heightPie);
+  .attr("height", heightPie)
+  .append("g")
+  .attr("transform", "translate(" + widthPie / 2 + "," + heightPie / 2 + ")");
+
+
+
 
 // Dữ liệu Movies và TV shows
 d3.csv("resources/data/netflix_titles.csv")
