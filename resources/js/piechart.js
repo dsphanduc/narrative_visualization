@@ -16,7 +16,6 @@ const svgPie = d3.select("#piechart").html("")
   .attr("y", -300) // Điều chỉnh vị trí của tiêu đề
   .attr("text-anchor", "middle")
   .style("font-size", "25px")
-  
   .style("font-weight", "bold")
   .text("Total Movies & TV Shows on Netflix");
 
