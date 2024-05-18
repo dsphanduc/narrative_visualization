@@ -1,11 +1,4 @@
 /* intro_web */
-#intro-video{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-}
 
 #header {
     background-color: rgb(1, 1, 1);
@@ -209,10 +202,11 @@ select {
     font-size: 18px;
 }
 
-#intro-video{
-    position: absolute;
-    width: 100%;
-    height: 100%;
+#intro-video {
+    position: fixed;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999; /* Đảm bảo video được hiển thị trên tất cả các phần tử khác */
 }
