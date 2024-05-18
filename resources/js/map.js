@@ -1,0 +1,184 @@
+import { dataPath, dataSplit, geoDataPath, getUniqueCountries, getUniqueGenres } from "./utils.js";
+
+function makeMap([geoData, data]) {
+
+    let selectedYear = null;
+    let selectedGenres = null;
+
+    // Transform the list-like elements of each object in the data into an array of elements
+    data = dataSplit(data);
+
+    // Create the map
+    const map = L.map('map').setView([28.0339, 1.6596], 2);
+
+    // Create tile layers
+    const OSM = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="href://osm.org/copyright">OpenStreetMap</a> contributors'
+    });
+
+    const CartoDB_PositronNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+    });
+
+    const Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
+        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        subdomains: 'abcd',
+        minZoom: 0,
+        maxZoom: 20,
+        ext: 'png'
+    });
+
+    // add the layers to the map
+    OSM.addTo(map);
+    CartoDB_PositronNoLabels.addTo(map);
+    Stamen_TonerHybrid.addTo(map);
+
+    // Get an array that contains all countries from the dataset (unique)
+    let uniqueCountries = getUniqueCountries(data);
+
+    // Get an array of unique genres of the dataset
+    let uniqueGenres = getUniqueGenres(data);
+
+    // Movie and Show count for all countries in a given year
+    const countPerCountryPerFilter = function() {
+        let tempData = data;
+
+        // filter entries of the current year
+        if (selectedYear !== null) tempData = tempData.filter(el => new Date(el.date_added).getFullYear() === selectedYear);
+
+        // filter entries that contain at least one of the selected genres
+        if (selectedGenres !== null) {
+            tempData = tempData.filter(el => {
+                return selectedGenres.some(genre => el.listed_in.includes(genre));
+            });
+        }
+
+        // Count shows and movies per country: {country1: {showCount: 1, movieCount: 2}, ...}
+        return tempData.reduce((obj, el) => {
+            el.country.forEach(d => {
+                if (!obj[d]) obj[d] = { showCount: 0, movieCount: 0 };
+                obj[d][el.type === "Movie" ? "movieCount" : "showCount"] += 1;
+            });
+            return obj;
+        }, {});
+    };
+
+    // Create an Object of the form {country1: [north, east], country2: [north, east], ...} for the countries in uniqueCountries
+    let coordinates = geoData.filter(el => uniqueCountries.includes(el.country))
+        .reduce((obj, el) => {
+            obj[el.country] = [el.latitude, el.longitude];
+            return obj;
+        }, {});
+
+    // Create a feature group for the markers
+    let circleLayer = L.featureGroup();
+
+    // draw the markers and their descriptors on the map
+    const drawCircles = function() {
+
+        // Remove the previously added circles
+        if (map.hasLayer(circleLayer)) {
+            map.removeLayer(circleLayer);
+        }
+
+        // Set a new feature group
+        circleLayer = L.featureGroup();
+
+        // Get the correctly filtered data set
+        let countData = countPerCountryPerFilter();
+
+        // Stop if there are no values in the filtered data set
+        if (Object.values(countData).length === 0) return;
+
+        uniqueCountries.forEach(d => {
+
+            // if the country is not present in the given year
+            if (!countData[d]) return;
+
+            // Add the circle
+            let circle = L.circle(coordinates[d], {
+                color: 'darkred',
+                fillColor: 'darkred',
+                fillOpacity: 0.5,
+                radius: 500 * (countData[d].movieCount + countData[d].showCount)
+            });
+            circle.addTo(circleLayer);
+
+            // Add the popup
+            let popUp = L.popup();
+
+            // define the HTML text that is displayed
+            let content = `<strong>${d}</strong><br>Movies: ${countData[d].movieCount}<br>Shows: ${countData[d].showCount}`;
+
+            // Define the mouseover effect
+            circle.on("mouseover", e => {
+                popUp.setLatLng(e.latlng)
+                    .setContent(content)
+                    .openOn(map);
+            });
+        });
+        circleLayer.addTo(map);
+    };
+
+    // Setup the click behaviour of the time slider
+    mapTimeSlider.onchange = () => {
+        selectedYear = parseInt(mapTimeSlider.value);
+        drawCircles();
+        yearDisplay.innerText = mapTimeSlider.value;
+    };
+
+    // Setup the click behaviour of the timeCheckBox
+    mapTimeCheckBox.onclick = () => {
+        if (mapTimeCheckBox.checked) {
+            mapTimeSlider.disabled = false;
+
+            // disable genres and select all genres
+            genreSelectBox.disabled = true;
+            selectedGenres = uniqueGenres;
+            Array.from(genreSelectBox.selectedOptions).forEach(i => i.selected = false);
+
+            selectedYear = parseInt(mapTimeSlider.value);
+            drawCircles();
+            yearDisplay.innerText = mapTimeSlider.value;
+        } else {
+            mapTimeSlider.disabled = true;
+            genreSelectBox.disabled = false;
+
+            selectedYear = null;
+            drawCircles();
+            yearDisplay.innerText = "All Years";
+        }
+    };
+
+    // create the options for the genre select box
+    uniqueGenres.forEach(g => {
+        let option = document.createElement('option');
+        option.value = g;
+        option.innerText = g;
+        genreSelectBox.appendChild(option);
+    });
+
+    // define the behaviour for when the selected genres change
+    genreSelectBox.onchange = () => {
+        const genres = Array.from(genreSelectBox.selectedOptions).map(el => el.value);
+        selectedGenres = genres;
+        drawCircles();
+    };
+
+    // draw circles
+    drawCircles();
+}
+
+// make controller elements
+const mapTimeCheckBox = d3.select('#map-time-checkbox').node();
+const mapTimeSlider = d3.select('#map-time-slider').node();
+const yearDisplay = d3.select('#map-year-display').node();
+const genreSelectBox = d3.select('#map-genre-select').node();
+
+// Load the datasets using D3
+Promise.all([
+    d3.csv(geoDataPath),
+    d3.csv(dataPath)
+]).then(makeMap);
