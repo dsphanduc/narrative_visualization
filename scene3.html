@@ -3,18 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="resources/css/styles.css"/>
+    <link rel="stylesheet" href="resources/css/stylesmap.css"/>
     <title>Evolution of Netflix Content</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+    <!--D3.js library v.5-->
+    <script src="https://d3js.org/d3.v5.js"></script>
+
+    <!-- stylesheet required for leaflet-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="crossorigin=""/>
+
+    <!-- Leaflet library -->
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="crossorigin=""></script>
+
+    <!-- Splide JS: https://splidejs.com/ -->
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
 </head>
 <body>
-<h1>Evolution of <span style="color: #b20710">Netflix's</span> Content</h1>
-
-
-<p>This scene explores how Netflix's content distribution has evolved over time based on <b>age ratings</b>.<br>In the chart below, the x-axis represents the timeline, while the y-axis shows total count of produced content.<br><br>Discover the shifting focus in their content strategy and the significant increase in content production for <b>mature audiences</b>.</p>
-
-<svg id="map" width="100%" height="100%"></svg>
+    <div class="py-5" id="vis2">
+        <h1 class="display-6">Interactive Map</h1>
+        <p class="lead">
+            Explore the number of movies and shows in the netflix library per production country. When using the year filter,
+            be aware that there are significantly fewer entries in the database pre-2015 compared to later years. Alternatively,
+            the genre filter allows you to look at one or more genres in particular. To revert your selection and display
+            all genres at once, simply select all (<strong>Ctrl + A</strong> / <strong>&#8984; + A</strong>).
+        </p>
+        <div class="map" id="map"></div>
+        <div class="controller" id="map-controller">
+            <div id="time-slider-container">
+                <p id="map-year-display"> All Years</p>
+                <input type="checkbox" id="map-time-checkbox">
+                <input type="range" disabled min="2008" max="2021" class="slider" id="map-time-slider">
+            </div>
+            <select multiple id="map-genre-select"></select>
+        </div>
+    </div>
 
 <div class="navigation">
     <a href="scene1.html" class="scene_button" style="background: #e50914; color: #f5f5f1">Scene 1</a>
@@ -23,7 +53,7 @@
 </div>
 
 <script src="resources/js/navigation.js"></script>
-<script src="resources/js/map.js"></script>
+<script type = "module"src="resources/js/map.js"></script>
 <!-- <footer>
     <div id="myFooter">
         <span id="orientationText" class="orientations">
