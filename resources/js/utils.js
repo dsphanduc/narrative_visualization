@@ -1,5 +1,5 @@
 // data path for main data set
-export const dataPath = "resources/data/netflix_titles.csv"
+export const dataPath = "resources/data/netflix_clean.csv"
 
 // data path for the geo locations data.
 // Attribution: https://github.com/google/dspl/blob/master/samples/google/canonical/countries.csv

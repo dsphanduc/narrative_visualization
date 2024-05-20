@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <link rel="stylesheet" href="resources/css/stylemap.css"/>
     <title>Evolution of Netflix Content</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
@@ -27,22 +27,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
 </head>
 <body>
-    <div class="py-5" id="vis2">
-        <h1 class="display-6">Interactive Map</h1>
-        <p class="lead">
-            Explore the number of movies and shows in the netflix library per production country. When using the year filter,
-            be aware that there are significantly fewer entries in the database pre-2015 compared to later years. Alternatively,
-            the genre filter allows you to look at one or more genres in particular. To revert your selection and display
-            all genres at once, simply select all (<strong>Ctrl + A</strong> / <strong>&#8984; + A</strong>).
-        </p>
-        <div class="map" id="map"></div>
-        <div class="controller" id="map-controller">
-            <div id="time-slider-container">
-                <p id="map-year-display"> All Years</p>
-                <input type="checkbox" id="map-time-checkbox">
-                <input type="range" disabled min="2008" max="2021" class="slider" id="map-time-slider">
+    <div class="container">
+        <div class="pt-5 text-white">
+            <div class="py-5" id="vis2">
+                <h1 class="display-6">Interactive Map</h1>
+                <p class="lead">
+                    Explore the number of movies and shows in the netflix library per production country. When using the year filter,
+                    be aware that there are significantly fewer entries in the database pre-2015 compared to later years. Alternatively,
+                    the genre filter allows you to look at one or more genres in particular. To revert your selection and display
+                    all genres at once, simply select all (<strong>Ctrl + A</strong> / <strong>&#8984; + A</strong>).
+                </p>
+                <div class="map" id="map"></div>
+                <div class="controller" id="map-controller">
+                    <div id="time-slider-container">
+                        <p id="map-year-display"> All Years</p>
+                        <input type="checkbox" id="map-time-checkbox">
+                        <input type="range" disabled min="2008" max="2021" class="slider" id="map-time-slider">
+                    </div>
+                    <select multiple id="map-genre-select"></select>
+                </div>
             </div>
-            <select multiple id="map-genre-select"></select>
         </div>
     </div>
 
@@ -53,7 +57,7 @@
     </div>
 
 <script src="resources/js/navigation.js"></script>
-<script type = "module"src="resources/js/map.js"></script>
+<script type = "module" src="resources/js/map.js"></script>
 <!-- <footer>
     <div id="myFooter">
         <span id="orientationText" class="orientations">
