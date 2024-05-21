@@ -4,33 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="resources/css/styles.css"/>
-    <title>Evolution of Netflix Content</title>
+    <title>Top 10 Listed_in</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"></script>
+    <style>
+        .chart-container {
+            position: relative;
+        }
+        .toggle-button-container {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-<h1>Evolution of <span style="color: #b20710">Netflix's</span> Content</h1>
+<h1>Top 10 Genres of Netflix</h1>
 
-<p>This scene shines a spotlight on the countries that produce the most content for Netflix.<br>In the chart below, the x-axis represents the timeline, while the y-axis shows the total count of produced content.<br><br>Explore the global distribution of Netflix's content production, with a particular emphasis on the <b>United States 🇺🇸</b> and <b>India 🇮🇳</b>. <br>Notice the significant growth in content production starting from <b>2016</b>, reflecting Netflix's ambitious global expansion strategy.</p>
+<div class="toggle-button-container">
+    <button id="toggleButton">TV Show chart</button>
+</div>
 
+<div id="chartContainerMovies" class="chart-container">
+    <!-- Bar chart for Movies will be appended here -->
+</div>
 
-<svg id="chart" width="100%" height="100%" viewBox="0 0 1920 920" preserveAspectRatio="xMinYMin meet"></svg>
+<div id="chartContainerTVShows" class="chart-container" style="display: none">
+    <!-- Bar chart for TV Shows will be appended here -->
+</div>
 
 <div class="navigation">
-    <a href="scene1.html" class="scene_button" style="background: #e50914; color: #f5f5f1">Scene 1</a>
-    <a href="scene2.html" class="scene_button active" style="font-weight: bolder">Scene 2</a>
-    <a href="scene3.html" class="scene_button" style="background: #e50914; color: #f5f5f1">Scene 3</a>
+    <a href="scene1.html" class="scene_button">Scene 1</a>
+    <a href="scene2.html" class="scene_button active">Scene 2</a>
+    <a href="scene3.html" class="scene_button">Scene 3</a>
 </div>
 
 <script src="resources/js/navigation.js"></script>
-<script src="resources/js/horizontal_chart.js"></script>
-<!-- <footer>
+<script src="resources/js/scene2.js"></script>
+<footer>
     <div id="myFooter">
-<span id="orientationText" class="orientations">
-    <br>
-          Use the <img class="keyboardIconSize" src="resources/images/keyboard_key_left.png"><img class="keyboardIconSize" src="resources/images/keyboard_key_right.png"> keys to navigate.
-      Hover over data points to view information.</span>
+        <span id="orientationText" class="orientations">
+            <br>Use the <img class="keyboardIconSize" src="resources/images/keyboard_key_left.png"><img class="keyboardIconSize" src="resources/images/keyboard_key_right.png"> keys to navigate.
+        </span>
     </div>
-</footer> -->
+</footer>
 </body>
 </html>
