@@ -1,8 +1,12 @@
-/*
-* General page layout
-* Start of code adapted from https://www.web-eau.net/blog/examples-header-bootstrap
-*/
 
+.h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2vw;
+    color: #e50914; /* Netflix red title */
+    justify-content: center;
+    text-align: center; /* Ensure text is centered within the h1 */
+    margin: 0;
+}
 .navbar {
     transition: all 0.4s;
 }
@@ -127,4 +131,30 @@ body {
 
 #streamgraph {
     margin-left: 50px;
+}
+
+
+.scene_button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.9vw;
+    margin: 10px;
+    padding: 10px;
+    text-decoration: none;
+    background-color: #e50914; /* Netflix red button */
+    color: white; /* Netflix button text color */
+    border-radius: 5px;
+    border: none;
+}
+
+.scene_button:active {
+    background-color: #b20710; /* Darker red for active button */
+    color: white;
+    font-weight: bold;
+}
+.navigation {
+    display: flex;
+    flex-direction: row;      /* Ensure the buttons are in a row */
+    gap: 10px;                /* Add space between the buttons */
+    justify-content: center;  /* Center horizontally */
+    align-items: center;      /* Center vertically */
 }

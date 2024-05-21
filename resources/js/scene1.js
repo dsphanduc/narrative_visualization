@@ -37,7 +37,7 @@ function drawScene1(data) {
         .data(d3.groups(newData, d => d.type))
         .join("path")
         .attr("class", "area")
-        .attr("fill", d => d[0] === "Movie" ? "#b20710" : "#221f1f")
+        .attr("fill", d => d[0] === "Movie" ? "#b20710" : "#f75151") // màu hình
         .attr("stroke", "black")
         .attr("stroke-width", 3)
         .attr("opacity", 0.8)
@@ -56,20 +56,20 @@ function drawScene1(data) {
         .style("font-size", "18px")
         .style("font-family", "sans-serif");
 
-    g.append("g")
-        .attr("class", "grid")
-        .call(d3.axisLeft(y)
-            .tickSize(-width + margin.right + margin.left)
-            .tickFormat("")
-        )
-        .selectAll("line")
-        .attr("stroke", "darkblue")
-        .attr("stroke-opacity", "0.6")
-        .attr("shape-rendering", "crispEdges")
-        .attr("stroke-dasharray", "3,3");
+    // g.append("g")
+    //     .attr("class", "grid")
+    //     .call(d3.axisLeft(y)
+    //         .tickSize(-width + margin.right + margin.left)
+    //         .tickFormat("")
+    //     )
+    //     .selectAll("line")
+    //     .attr("stroke", "darkblue")
+    //     .attr("stroke-opacity", "0.6")
+    //     .attr("shape-rendering", "crispEdges")
+    //     .attr("stroke-dasharray", "3,3");
 
     g.append("g")
-        .attr("transform", `translate(${width - margin.left - margin.right}, 0)`)
+        .attr("transform", `translate(${width - margin.left - margin.right }, 0)`)
         .call(d3.axisRight(y))
         .selectAll("text")
         .style("font-size", "18px")
@@ -80,6 +80,7 @@ function drawScene1(data) {
         .attr("font-size", "22px")
         .attr("font-weight", "bold")
         .attr("text-anchor", "end")
+        .attr("fill", "white")
         .selectAll("g")
         .data(["Movie", "TV Show"])
         .join("g")
@@ -90,7 +91,7 @@ function drawScene1(data) {
         .attr("y", -100)
         .attr("width", 19)
         .attr("height", 19)
-        .attr("fill", d => d === "Movie" ? "#b20710" : "#221f1f")
+        .attr("fill", d => d === "Movie" ? "#b20710" : "#f75151") // màu legend 
         .attr("opacity", 0.85);
 
     legend.append("text")
@@ -102,12 +103,13 @@ function drawScene1(data) {
         
         g.append("text")
         .attr("x", width / 2) // Đặt x ở giữa của biểu đồ
-        .attr("y", margin.top - 70) // Đặt y ở phía trên của biểu đồ
+        .attr("y", margin.top - 80) // Đặt y ở phía trên của biểu đồ
         .attr("dy", "0.35em")
-        .style("font-size", "30px")
+        .style("font-size", "35px")
         .style("font-weight", "bold")
         .attr("text-anchor", "middle") // Căn giữa văn bản theo trục x
         .attr("font-family", "sans-serif")
+        .attr("fill", "white") // Thêm màu trắng
         .text("Content Growth: Movies and TV Shows added over the years");
 
     
@@ -125,7 +127,7 @@ function drawScene1(data) {
         .attr("r", 8)
         .attr("stroke", "gray")
         .attr("stroke-width", 2)
-        .attr("fill", d => d.type === "Movie" ? "#b20710" : "#221f1f")
+        .attr("fill", d => d.type === "Movie" ? "#b20710" : "#f44607")
         .on("mouseover", (event, d) => {
             tooltip.transition().duration(200).style("opacity", .9);
             tooltip.html(`Year: ${d.date.getFullYear()}<br>${d.type} count: ${d.value}`)
@@ -181,7 +183,7 @@ function drawScene1(data) {
         .attr("r", 8)
         .attr("stroke", "silver")
         .attr("stroke-width", 2)
-        .attr("fill", d => d.type === "Movie" ? "#b20710" : "#221f1f")
+        .attr("fill", d => d.type === "Movie" ? "#b20710" : "#f44607")
         .on("mouseover", (event, d) => {
             tooltip.transition().duration(200).style("opacity", .9);
             tooltip.html(`<b>Year: ${d.date.getFullYear()}</b><br><b>${d.type} count: ${d.value}</b>`)

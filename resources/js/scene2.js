@@ -59,12 +59,12 @@ function drawChart(container, data, title) {
 
     svg.append("g")
         .attr("class", "x-axis")
-        .attr("transform", translate(0, ${height - margin.bottom}))
+        .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(xAxis);
 
     svg.append("g")
         .attr("class", "y-axis")
-        .attr("transform", translate(${margin.left}, 0))
+        .attr("transform", `translate(${margin.left}, 0)`)
         .call(yAxis);
 
     const tooltip = d3.select("body").append("div")
@@ -89,7 +89,7 @@ function drawChart(container, data, title) {
         .attr("fill", "#b20710")
         .on("mouseover", function(event, d) {
             tooltip.style("visibility", "visible")
-                   .text(${d.category}: ${d.value});
+                   .text(`${d.category}: ${d.value}`);
             d3.select(this).attr("fill", "#d9534f");
         })
         .on("mousemove", function(event) {
@@ -109,38 +109,41 @@ function drawChart(container, data, title) {
         .enter()
         .append("text")
         .attr("class", "bar-label")
-        .attr("y", d => yScale(d.category) + yScale.bandwidth()/2)
+        .attr("y", d => yScale(d.category) + yScale.bandwidth() / 2)
         .attr("x", xScale(0))
         .attr("text-anchor", "start")
         .style("font-size", "14px")
-        .style("fill", "black")
+        .style("fill", "white")
         .transition()
         .duration(1000)
         .attr("x", d => xScale(d.value) + 5)
-        .attr("y", d => yScale(d.category) + yScale.bandwidth()/2 + 4)
+        .attr("y", d => yScale(d.category) + yScale.bandwidth() / 2 + 4)
         .text(d => d.value);
 
     svg.append("text")
         .attr("x", width / 2)
         .attr("y", margin.top / 2)
         .attr("text-anchor", "middle")
+        .attr("fill", "white")
         .style("font-size", "20px")
-        .text(Top 10 Genres for ${title});
+        .text(`Top 10 Genres for ${title}`);
 
     svg.append("text")
         .attr("x", -height / 2)
-        .attr("y", margin.left / 2)
+        .attr("y", margin.left / 2-60)
         .attr("text-anchor", "middle")
         .attr("transform", "rotate(-90)")
+        .attr("fill", "white")
         .style("font-size", "18px")
-        
+        .text("Genre");
 
     svg.append("text")
         .attr("x", width - margin.right / 2)
         .attr("y", height - margin.bottom / 2)
         .attr("text-anchor", "middle")
-        .style("font-size", "14px")
-       
+        .attr("fill","white")
+        .style("font-size", "15px")
+        .text("COUNT");
 
     return svg;
 }

@@ -17,6 +17,7 @@ const svgPie = d3.select("#piechart").html("")
   .attr("text-anchor", "middle")
   .style("font-size", "25px")
   .style("font-weight", "bold")
+  .attr("fill", "white")
   .text("Total Movies & TV Shows on Netflix");
 
 
@@ -43,7 +44,7 @@ d3.csv("resources/data/netflix_titles.csv")
 
 function draw_pie(data) {
   // Màu sắc cho các cung của biểu đồ tròn
-  const color = d3.scaleOrdinal(['#FF0000', '#770000']);
+  const color = d3.scaleOrdinal(['#f75151', '#b20710']);
 
   // Tạo hàm pie để chuyển đổi dữ liệu thành các cung của biểu đồ tròn
   var pie = d3.pie()
